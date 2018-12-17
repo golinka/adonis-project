@@ -1,0 +1,22 @@
+{
+  "env": {
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "class-methods-use-this": "off",
+    "global-require": "off",
+    "arrow-parens": ["error", "as-needed"],
+    "no-param-reassign": ["error", { "props": false }],
+    "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
+    "no-prototype-builtins": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_driverInstance"] }]
+  },
+  "globals": {
+    "use": true
+  }
+}

@@ -17,6 +17,9 @@ const Route = use('Route');
 Route.get('/', () => ({ status: 'Ok', version: '1.0.0' }));
 
 Route.group(() => {
+  Route.post('/login', 'UserController.login');
+  Route.get('/logout', 'UserController.logout');
+
   Route.get('/products', 'ProductController.index');
   Route.post('/products', 'ProductController.store');
   Route.get('/products/:pid', 'ProductController.show');

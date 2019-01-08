@@ -5,7 +5,10 @@ class UserSchema extends Schema {
   up() {
     this.create('roles', table => {
       table.increments();
-      table.string('name', 20).notNullable().unique();
+      table
+        .string('name', 20)
+        .notNullable()
+        .unique();
       table.timestamps();
     });
 
@@ -23,7 +26,7 @@ class UserSchema extends Schema {
         .references('id')
         .on('roles')
         .onDelete('cascade');
-        table.timestamps();
+      table.timestamps();
     });
   }
 

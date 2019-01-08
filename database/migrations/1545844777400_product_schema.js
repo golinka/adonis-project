@@ -12,9 +12,7 @@ class ProductSchema extends Schema {
     this.create('products', table => {
       table.increments();
       table.string('title', 50).notNullable();
-      table
-        .string('description', 255)
-        .notNullable();
+      table.string('description', 255).notNullable();
       table
         .integer('price')
         .notNullable()

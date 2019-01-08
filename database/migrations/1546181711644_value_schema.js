@@ -1,12 +1,11 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema');
 
-class ValueSchema extends Schema {
+class FieldProductSchema extends Schema {
   up() {
-    this.create('field_value', table => {
+    this.create('field_products', table => {
       table.increments();
-      table.string('value', 255).notNullable();
-      table.string('value_type', 20).notNullable();
+      table.integer('value').notNullable();
       table
         .integer('field_id')
         .notNullable()
@@ -27,16 +26,11 @@ class ValueSchema extends Schema {
         .onDelete('cascade');
       table.timestamps();
     });
-
-    this.table('field_value', table => {
-      table.dropColumn('created_at');
-      table.dropColumn('updated_at');
-    });
   }
 
   down() {
-    this.drop('field_value');
+    this.drop('field_products');
   }
 }
 
-module.exports = ValueSchema;
+module.exports = FieldProductSchema;

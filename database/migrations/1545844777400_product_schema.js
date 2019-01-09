@@ -6,7 +6,6 @@ class ProductSchema extends Schema {
     this.create('types', table => {
       table.increments();
       table.string('name', 30).notNullable();
-      table.timestamps();
     });
 
     this.create('products', table => {
@@ -35,7 +34,7 @@ class ProductSchema extends Schema {
         .references('id')
         .on('users')
         .onDelete('cascade');
-      table.timestamps();
+      table.timestamp('created_at').defaultTo(this.fn.now());
     });
   }
 

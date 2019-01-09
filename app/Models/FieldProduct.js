@@ -2,12 +2,12 @@
 const Model = use('Model');
 
 class FieldProduct extends Model {
-  product() {
-    return this.belongsTo('App/Models/Product');
+  static get createdAtColumn() {
+    return null;
   }
 
-  field() {
-    return this.belongsTo('App/Models/Field');
+  static get updatedAtColumn() {
+    return null;
   }
 }
 

@@ -25,7 +25,8 @@ Factory.blueprint('App/Models/Type', async (faker, index, data) => ({
 }));
 
 Factory.blueprint('App/Models/Field', async (faker, index, data) => ({
-  name: data.name || faker.word()
+  name: data.name || faker.unique(faker.word, 1)[0],
+  type_id: data.type_id || null
 }));
 
 Factory.blueprint('App/Models/Product', async (faker, index, data) => ({

@@ -3,9 +3,9 @@ const Schema = use('Schema');
 
 class FieldProductSchema extends Schema {
   up() {
-    this.create('field_products', table => {
+    this.create('field_product', table => {
       table.increments();
-      table.integer('value').notNullable();
+      table.string('value').notNullable();
       table
         .integer('field_id')
         .notNullable()
@@ -24,12 +24,11 @@ class FieldProductSchema extends Schema {
         .references('id')
         .on('products')
         .onDelete('cascade');
-      table.timestamps();
     });
   }
 
   down() {
-    this.drop('field_products');
+    this.drop('field_product');
   }
 }
 

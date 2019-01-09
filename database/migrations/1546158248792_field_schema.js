@@ -18,7 +18,6 @@ class FieldSchema extends Schema {
         .references('id')
         .on('types')
         .onDelete('cascade');
-      table.timestamps();
     });
   }
 

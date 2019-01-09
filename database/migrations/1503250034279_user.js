@@ -3,23 +3,36 @@ const Schema = use('Schema');
 
 class UserSchema extends Schema {
   up() {
-    this.create('users', table => {
+    this.create('roles', table => {
       table.increments();
       table
-        .string('username', 80)
+        .string('name', 20)
         .notNullable()
         .unique();
+      table.timestamps();
+    });
+
+    this.create('users', table => {
+      table.increments();
+      table.string('first_name', 20).notNullable();
+      table.string('last_name', 20).notNullable();
+      table.string('password', 255).notNullable();
       table
-        .string('email', 254)
+        .integer('role_id')
         .notNullable()
-        .unique();
-      table.string('password', 60).notNullable();
+        .index();
+      table
+        .foreign('role_id')
+        .references('id')
+        .on('roles')
+        .onDelete('cascade');
       table.timestamps();
     });
   }
 
   down() {
     this.drop('users');
+    this.drop('roles');
   }
 }
 

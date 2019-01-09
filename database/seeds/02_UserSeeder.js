@@ -6,10 +6,8 @@ class UserSeeder {
     const userRole = await Role.findBy('name', 'user');
     const adminRole = await Role.findBy('name', 'admin');
 
-    const users = await Factory.model('App/Models/User').makeMany(3);
-    const admins = await Factory.model('App/Models/User').makeMany(1);
-    await userRole.users().saveMany(users);
-    await adminRole.users().saveMany(admins);
+    await Factory.model('App/Models/User').createMany(3, { role_id: userRole.id });
+    await Factory.model('App/Models/User').create({ role_id: adminRole.id });
   }
 }
 

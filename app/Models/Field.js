@@ -15,7 +15,9 @@ class Field extends Model {
   }
 
   products() {
-    return this.belongsToMany('App/Models/Product');
+    return this.belongsToMany('App/Models/Product')
+      .pivotTable('field_product')
+      .pivotModel('App/Models/FieldProduct');
   }
 }
 

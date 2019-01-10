@@ -3,7 +3,7 @@ const Schema = use('Schema');
 
 class FieldProductSchema extends Schema {
   up() {
-    this.create('field_product', table => {
+    this.create('field_products', table => {
       table.increments();
       table.string('value').notNullable();
       table
@@ -28,7 +28,7 @@ class FieldProductSchema extends Schema {
   }
 
   down() {
-    this.drop('field_product');
+    this.drop('field_products');
   }
 }
 

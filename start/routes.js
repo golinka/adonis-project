@@ -36,5 +36,5 @@ Route.group(() => {
   Route.post('/types/:tid/fields', 'FieldController.store');
   Route.get('/types/:tid/fields/:fid', 'FieldController.show');
   Route.put('/types/:tid/fields/:fid', 'FieldController.update');
-  Route.get('/types/:tid/fields/:fid/delete', 'FieldController.delete');
+  Route.delete('/types/:tid/fields/:fid', 'FieldController.delete');
 }).prefix('api/v1');

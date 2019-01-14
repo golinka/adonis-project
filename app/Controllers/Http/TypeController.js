@@ -1,28 +1,45 @@
+const Type = use('App/Models/Type');
+
 class TypeController {
-  async index() {
-    return {
-      data: [{ id: 1, name: 'phone' }, { id: 2, name: 'laptop' }, { id: 3, name: 'car' }, { id: 4, name: 'apartment' }]
-    };
+  async index({ response }) {
+    const types = await Type.all();
+    response.status(200).json(types);
   }
 
   async store({ request, response }) {
-    return response.status(201).json(request.body);
+    const { name } = request.only(['name']);
+    const type = new Type();
+
+    type.name = name;
+    await type.save();
+
+    response.status(201).json(type);
   }
 
-  async show() {
-    return {
-      data: [{ id: 2, name: 'laptop' }]
-    };
+  async show({ params, response }) {
+    const { tid } = params;
+    const type = await Type.findOrFail(tid);
+    response.status(200).json(type);
   }
 
-  async update() {
-    return {
-      data: [{ id: 2, name: 'laptop' }]
-    };
+  async update({ params, request, response }) {
+    const { tid } = params;
+    const data = request.only(['name']);
+    const type = await Type.findOrFail(tid);
+
+    type.merge(data);
+    await type.save();
+
+    response.status(200).json(type);
   }
 
-  async delete({ response }) {
-    return response.status(204).json(null);
+  async delete({ params, response }) {
+    const { tid } = params;
+
+    const type = await Type.findOrFail(tid);
+    type.delete();
+
+    response.status(204).json(null);
   }
 }
 

@@ -1,33 +1,43 @@
+const Product = use('App/Models/Product');
+
 class ProductController {
-  async index() {
-    return {
-      data: [
-        { id: 1, name: 'iPhone 7', description: 'Some desc', price: 17000, date_added: '12-12-2018' },
-        { id: 2, name: 'iPhone 7 Plus', description: 'Some desc 2', price: 21000, date_added: '10-12-2018' },
-        { id: 3, name: 'Samsung S9', description: 'Some desc 3', price: 23000, date_added: '10-12-2018' },
-        { id: 4, name: 'Samsung Note 9', description: 'Some desc 4', price: 24000, date_added: '09-12-2018' }
-      ]
-    };
+  async index({ request, response }) {
+    const filter = request.get();
+    const result = await Product.getProducts(filter);
+
+    if (result.length > 0) {
+      response.status(200).json(result);
+    } else {
+      response.status(204).json(null);
+    }
   }
 
   async store({ request, response }) {
-    return response.status(201).json(request.body);
+    const product = await Product.saveProduct(request);
+    response.status(201).json(product);
   }
 
-  async show() {
-    return {
-      data: [{ id: 2, name: 'iPhone 7 Plus', description: 'Some desc 2', price: 21000, date_added: '10-12-2018' }]
-    };
+  async show({ params, response }) {
+    const { pid } = params;
+    const product = await Product.showProduct(pid);
+    if (product) {
+      response.status(200).json(product);
+    } else {
+      response.status(204).json(null);
+    }
   }
 
-  async update() {
-    return {
-      data: [{ id: 2, name: 'iPhone 7 Plus', description: 'Some desc 2', price: 21000, date_added: '10-12-2018' }]
-    };
+  async update({ params, request, response }) {
+    const { pid } = params;
+    const product = await Product.updateProduct(pid, request);
+    response.status(200).json(product);
   }
 
-  async delete({ response }) {
-    return response.status(204).json(null);
+  async delete({ params, response }) {
+    const { pid } = params;
+    const product = await Product.findOrFail(pid);
+    await product.delete();
+    response.status(204).json(null);
   }
 }
 

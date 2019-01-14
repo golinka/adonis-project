@@ -2,6 +2,11 @@
 const Model = use('Model');
 
 class Product extends Model {
+  static boot() {
+    super.boot();
+    this.addTrait('App/Models/Traits/Repository');
+  }
+
   static get updatedAtColumn() {
     return null;
   }

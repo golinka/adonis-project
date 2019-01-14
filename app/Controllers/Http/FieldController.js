@@ -1,34 +1,34 @@
+const Field = use('App/Models/Field');
+
 class FieldController {
-  async index() {
-    return {
-      data: [
-        { id: 1, name: 'year', format: 'integer' },
-        { id: 2, name: 'model', format: 'varchar' },
-        { id: 3, name: 'diagonal', format: 'integer' },
-        { id: 4, name: 'fuel_type', format: 'varchar' },
-        { id: 5, name: 'body_type', format: 'varchar' }
-      ]
-    };
+  async index({ params, response }) {
+    const fields = await Field.getFields(params);
+    response.status(200).json(fields);
   }
 
-  async store({ request, response }) {
-    return response.status(201).json(request.body);
+  async store({ params, request, response }) {
+    const field = await Field.saveField(params, request);
+    response.status(201).json(field);
   }
 
-  async show() {
-    return {
-      data: [{ id: 3, name: 'diagonal', format: 'integer' }]
-    };
+  async show({ params, response }) {
+    const field = await Field.getField(params);
+
+    if (!field) {
+      response.status(204).json(null);
+    } else {
+      response.status(200).json(field);
+    }
   }
 
-  async update() {
-    return {
-      data: [{ id: 3, name: 'diagonal', format: 'integer' }]
-    };
+  async update({ params, request, response }) {
+    const field = await Field.updateField(params, request);
+    response.status(200).json(field);
   }
 
-  async delete({ response }) {
-    return response.status(204).json(null);
+  async delete({ params, response }) {
+    const result = await Field.deleteField(params);
+    response.status(204).json(result);
   }
 }
 

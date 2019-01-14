@@ -2,6 +2,11 @@
 const Model = use('Model');
 
 class Field extends Model {
+  static boot() {
+    super.boot();
+    this.addTrait('App/Models/Traits/Repository');
+  }
+
   static get createdAtColumn() {
     return null;
   }
@@ -18,6 +23,10 @@ class Field extends Model {
     return this.belongsToMany('App/Models/Product')
       .pivotTable('field_product')
       .pivotModel('App/Models/FieldProduct');
+  }
+
+  value() {
+    return this.hasOne('App/Models/FieldProduct');
   }
 }
 

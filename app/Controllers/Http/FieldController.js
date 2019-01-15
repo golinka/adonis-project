@@ -3,7 +3,7 @@ const Field = use('App/Models/Field');
 class FieldController {
   async index({ params, response }) {
     const fields = await Field.getFields(params);
-    response.status(200).json(fields);
+    response.json(fields);
   }
 
   async store({ params, request, response }) {
@@ -17,18 +17,18 @@ class FieldController {
     if (!field) {
       response.status(204).json(null);
     } else {
-      response.status(200).json(field);
+      response.json(field);
     }
   }
 
   async update({ params, request, response }) {
     const field = await Field.updateField(params, request);
-    response.status(200).json(field);
+    response.json(field);
   }
 
   async delete({ params, response }) {
-    const result = await Field.deleteField(params);
-    response.status(204).json(result);
+    await Field.deleteField(params);
+    response.status(204).json(null);
   }
 }
 

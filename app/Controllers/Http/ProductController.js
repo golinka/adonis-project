@@ -6,7 +6,7 @@ class ProductController {
     const result = await Product.getProducts(filter);
 
     if (result.length > 0) {
-      response.status(200).json(result);
+      response.json(result);
     } else {
       response.status(204).json(null);
     }
@@ -21,7 +21,7 @@ class ProductController {
     const { pid } = params;
     const product = await Product.showProduct(pid);
     if (product) {
-      response.status(200).json(product);
+      response.json(product);
     } else {
       response.status(204).json(null);
     }
@@ -30,7 +30,7 @@ class ProductController {
   async update({ params, request, response }) {
     const { pid } = params;
     const product = await Product.updateProduct(pid, request);
-    response.status(200).json(product);
+    response.json(product);
   }
 
   async delete({ params, response }) {

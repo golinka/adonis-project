@@ -32,9 +32,8 @@ class FieldRepository {
       .fields()
       .where('id', fid)
       .fetch();
-    const field = fields[0];
 
-    return field;
+    return fields[0];
   }
 
   static async updateField(params, request) {
@@ -62,10 +61,8 @@ class FieldRepository {
       .fields()
       .where('id', fid)
       .fetch();
-    const field = fields[0];
 
-    await field.delete();
-    return null;
+    await fields[0].delete();
   }
 }
 

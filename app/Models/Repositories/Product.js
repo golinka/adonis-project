@@ -33,9 +33,7 @@ class ProductRepository {
     }
 
     const { rows: products } = await query.fetch();
-    const result = products.filter(item => item.toJSON().user).filter(item => item.toJSON().type);
-
-    return result;
+    return products.filter(item => item.toJSON().user).filter(item => item.toJSON().type);
   }
 
   static async saveProduct(request) {
@@ -56,22 +54,20 @@ class ProductRepository {
         })
       )
     );
-    const productData = await Product.query()
+
+    return Product.query()
       .where('id', product.id)
       .with('user')
       .with('type', typeQuery => typeQuery.with('fields', fieldQuery => fieldQuery.with('value')))
       .fetch();
-
-    return productData;
   }
 
   static async showProduct(pid) {
-    const product = await Product.query()
+    return Product.query()
       .where('id', pid)
       .with('user')
       .with('type', typeQuery => typeQuery.with('fields', fieldQuery => fieldQuery.with('value')))
       .fetch();
-    return product;
   }
 
   static async updateProduct(pid, request) {
@@ -105,13 +101,11 @@ class ProductRepository {
     product.merge(data);
     await product.save();
 
-    const productData = await Product.query()
+    return Product.query()
       .where('id', pid)
       .with('user')
       .with('type', typeQuery => typeQuery.with('fields', fieldQuery => fieldQuery.with('value')))
       .fetch();
-
-    return productData;
   }
 }
 

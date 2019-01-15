@@ -3,7 +3,7 @@ const Type = use('App/Models/Type');
 class TypeController {
   async index({ response }) {
     const types = await Type.all();
-    response.status(200).json(types);
+    response.json(types);
   }
 
   async store({ request, response }) {
@@ -19,7 +19,7 @@ class TypeController {
   async show({ params, response }) {
     const { tid } = params;
     const type = await Type.findOrFail(tid);
-    response.status(200).json(type);
+    response.json(type);
   }
 
   async update({ params, request, response }) {
@@ -30,7 +30,7 @@ class TypeController {
     type.merge(data);
     await type.save();
 
-    response.status(200).json(type);
+    response.json(type);
   }
 
   async delete({ params, response }) {

@@ -21,9 +21,9 @@ Route.group(() => {
   Route.get('/logout', 'UserController.logout');
 
   Route.get('/products', 'ProductController.index');
-  Route.post('/products', 'ProductController.store');
+  Route.post('/products', 'ProductController.store').validator('CheckProduct');
   Route.get('/products/:pid', 'ProductController.show');
-  Route.put('/products/:pid', 'ProductController.update');
+  Route.put('/products/:pid', 'ProductController.update').validator('CheckProduct');
   Route.delete('/products/:pid', 'ProductController.delete');
 
   Route.get('/types', 'TypeController.index');

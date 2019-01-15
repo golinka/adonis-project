@@ -47,13 +47,9 @@ class ProductRepository {
     const product = await Product.create({ ...data, user_id: user.id });
     const fieldsIds = await Field.ids().where('type_id', data.type_id);
 
-    await Promise.all(
-      fields.map((value, index) =>
-        product.fields().attach(fieldsIds[index], row => {
-          row.value = value;
-        })
-      )
-    );
+    await product.fields().attach(fieldsIds, row => {
+      row.value = fields[row.field_id];
+    });
 
     return Product.query()
       .where('id', product.id)
@@ -79,13 +75,9 @@ class ProductRepository {
 
     if (product.type_id !== data.type_id) {
       await product.fields().detach();
-      await Promise.all(
-        fields.map((value, index) =>
-          product.fields().attach(fieldsIds[index], row => {
-            row.value = value;
-          })
-        )
-      );
+      await product.fields().attach(fieldsIds, row => {
+        row.value = fields[row.field_id];
+      });
     } else {
       await Promise.all(
         fields.map((value, index) =>

@@ -1,33 +1,39 @@
+const Product = use('App/Models/Product');
+const User = use('App/Models/User');
+
 class ProductController {
-  async index() {
-    return {
-      data: [
-        { id: 1, name: 'iPhone 7', description: 'Some desc', price: 17000, date_added: '12-12-2018' },
-        { id: 2, name: 'iPhone 7 Plus', description: 'Some desc 2', price: 21000, date_added: '10-12-2018' },
-        { id: 3, name: 'Samsung S9', description: 'Some desc 3', price: 23000, date_added: '10-12-2018' },
-        { id: 4, name: 'Samsung Note 9', description: 'Some desc 4', price: 24000, date_added: '09-12-2018' }
-      ]
-    };
+  async index({ request }) {
+    return Product.getProducts(request.only(['user_id', 'type_id', 'title']), request.only(['price', 'created_at']));
   }
 
   async store({ request, response }) {
-    return response.status(201).json(request.body);
+    const { rows: users } = await User.all();
+    const random = Math.floor(Math.random() * users.length);
+    const user = users[random];
+
+    const data = request.only(['title', 'description', 'price', 'type_id']);
+    const { fields } = request.post();
+    response.status(201);
+    return Product.saveProduct(user.id, data, fields);
   }
 
-  async show() {
-    return {
-      data: [{ id: 2, name: 'iPhone 7 Plus', description: 'Some desc 2', price: 21000, date_added: '10-12-2018' }]
-    };
+  async show({ params }) {
+    const { pid } = params;
+    return Product.showProduct(pid);
   }
 
-  async update() {
-    return {
-      data: [{ id: 2, name: 'iPhone 7 Plus', description: 'Some desc 2', price: 21000, date_added: '10-12-2018' }]
-    };
+  async update({ params, request }) {
+    const { pid } = params;
+    const data = request.only(['title', 'description', 'price', 'type_id']);
+    const { fields } = request.post();
+    return Product.updateProduct(pid, data, fields);
   }
 
-  async delete({ response }) {
-    return response.status(204).json(null);
+  async delete({ params, response }) {
+    const { pid } = params;
+    const product = await Product.findOrFail(pid);
+    await product.delete();
+    response.status(204).send();
   }
 }
 

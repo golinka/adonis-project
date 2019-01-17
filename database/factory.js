@@ -40,5 +40,5 @@ Factory.blueprint('App/Models/Product', async (faker, index, data) => ({
 Factory.blueprint('App/Models/FieldProduct', async (faker, index, data) => ({
   field_id: data.field_id || null,
   product_id: data.product_id || null,
-  value: data.value || faker.integer({ min: 1, max: 150 })
+  value: data.value || faker.word()
 }));

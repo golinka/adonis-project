@@ -1,7 +1,6 @@
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use('Model');
+const Boot = use('./Boot');
 
-class Field extends Model {
+class Field extends Boot {
   static get createdAtColumn() {
     return null;
   }
@@ -14,8 +13,8 @@ class Field extends Model {
     return this.belongsTo('App/Models/Type');
   }
 
-  products() {
-    return this.belongsToMany('App/Models/Product');
+  value() {
+    return this.hasOne('App/Models/FieldProduct');
   }
 }
 

@@ -1,7 +1,6 @@
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Model = use('Model');
+const Boot = use('./Boot');
 
-class Product extends Model {
+class Product extends Boot {
   static get updatedAtColumn() {
     return null;
   }
@@ -15,7 +14,7 @@ class Product extends Model {
   }
 
   fields() {
-    return this.belongsToMany('App/Models/Field');
+    return this.belongsToMany('App/Models/Field').pivotModel('App/Models/FieldProduct');
   }
 }
 

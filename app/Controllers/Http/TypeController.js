@@ -1,45 +1,34 @@
 const Type = use('App/Models/Type');
 
 class TypeController {
-  async index({ response }) {
-    const types = await Type.all();
-    response.json(types);
+  async index() {
+    return Type.all();
   }
 
   async store({ request, response }) {
-    const { name } = request.only(['name']);
-    const type = new Type();
-
-    type.name = name;
-    await type.save();
-
-    response.status(201).json(type);
-  }
-
-  async show({ params, response }) {
-    const { tid } = params;
-    const type = await Type.findOrFail(tid);
-    response.json(type);
-  }
-
-  async update({ params, request, response }) {
-    const { tid } = params;
     const data = request.only(['name']);
+    response.status(201);
+    return Type.create(data);
+  }
+
+  async show({ params }) {
+    const { tid } = params;
+    return Type.findOrFail(tid);
+  }
+
+  async update({ params, request }) {
+    const { tid } = params;
     const type = await Type.findOrFail(tid);
-
-    type.merge(data);
+    type.merge(request.only(['name']));
     await type.save();
-
-    response.json(type);
+    return type;
   }
 
   async delete({ params, response }) {
     const { tid } = params;
-
     const type = await Type.findOrFail(tid);
-    type.delete();
-
-    response.status(204).json(null);
+    await type.delete();
+    response.status(204).send();
   }
 }
 

@@ -9,6 +9,10 @@ class FieldProduct extends Model {
   static get updatedAtColumn() {
     return null;
   }
+
+  fields() {
+    return this.belongsToMany('App/Models/Product').withPivot(['field_id']);
+  }
 }
 
 module.exports = FieldProduct;

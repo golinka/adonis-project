@@ -1,43 +1,34 @@
 const Product = use('App/Models/Product');
 
 class ProductController {
-  async index({ request, response }) {
-    const filter = request.get();
-    const result = await Product.getProducts(filter);
-
-    if (result.length > 0) {
-      response.json(result);
-    } else {
-      response.status(204).json(null);
-    }
+  async index({ request }) {
+    return Product.getProducts(request.only(['user_id', 'type_id', 'title']), request.only(['price', 'created_at']));
   }
 
   async store({ request, response }) {
-    const product = await Product.saveProduct(request);
-    response.status(201).json(product);
+    const data = request.only(['title', 'description', 'price', 'type_id']);
+    const { fields } = request.post();
+    response.status(201);
+    return Product.saveProduct(data, fields);
   }
 
-  async show({ params, response }) {
+  async show({ params }) {
     const { pid } = params;
-    const product = await Product.showProduct(pid);
-    if (product) {
-      response.json(product);
-    } else {
-      response.status(204).json(null);
-    }
+    return Product.showProduct(pid);
   }
 
-  async update({ params, request, response }) {
+  async update({ params, request }) {
     const { pid } = params;
-    const product = await Product.updateProduct(pid, request);
-    response.json(product);
+    const data = request.only(['title', 'description', 'price', 'type_id']);
+    const { fields } = request.post();
+    return Product.updateProduct(pid, data, fields);
   }
 
   async delete({ params, response }) {
     const { pid } = params;
     const product = await Product.findOrFail(pid);
     await product.delete();
-    response.status(204).json(null);
+    response.status(204).send();
   }
 }
 

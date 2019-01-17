@@ -14,8 +14,7 @@
     "no-param-reassign": ["error", { "props": false }],
     "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],
     "no-prototype-builtins": "off",
-    "no-underscore-dangle": ["error", { "allow": ["_driverInstance"] }],
-    "camelcase": "off"
+    "no-underscore-dangle": ["error", { "allow": ["_driverInstance"] }]
   },
   "globals": {
     "use": true

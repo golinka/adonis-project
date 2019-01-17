@@ -9,9 +9,7 @@ class FieldRepository {
 
   static async saveField(tid, data) {
     const type = await Type.findOrFail(tid);
-    const field = await Field.create(data);
-    await type.fields().save(field);
-    return field;
+    return type.fields().create(data);
   }
 
   static async updateField(fid, data) {

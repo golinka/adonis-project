@@ -1,5 +1,4 @@
 const Product = use('App/Models/Product');
-const User = use('App/Models/User');
 
 class ProductRepository {
   static async getProducts(filter, sort) {
@@ -26,12 +25,8 @@ class ProductRepository {
     return query.fetch();
   }
 
-  static async saveProduct(data, fields) {
-    const { rows: users } = await User.all();
-    const random = Math.floor(Math.random() * users.length);
-    const user = users[random];
-
-    const product = await Product.create({ ...data, user_id: user.id });
+  static async saveProduct(userId, data, fields) {
+    const product = await Product.create({ ...data, user_id: userId });
     await product.fields().attach(Object.keys(fields), row => {
       row.value = fields[row.field_id];
     });

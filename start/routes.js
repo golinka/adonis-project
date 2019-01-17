@@ -33,8 +33,8 @@ Route.group(() => {
   Route.delete('/types/:tid', 'TypeController.delete');
 
   Route.get('/types/:tid/fields', 'FieldController.index');
-  Route.post('/types/:tid/fields', 'FieldController.store');
+  Route.post('/types/:tid/fields', 'FieldController.store').validator('StoreField');
   Route.get('/types/:tid/fields/:fid', 'FieldController.show');
-  Route.put('/types/:tid/fields/:fid', 'FieldController.update');
+  Route.put('/types/:tid/fields/:fid', 'FieldController.update').validator('UpdateField');
   Route.delete('/types/:tid/fields/:fid', 'FieldController.delete');
 }).prefix('api/v1');

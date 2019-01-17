@@ -2,6 +2,7 @@ const Validator = use('Validator');
 const Type = use('App/Models/Type');
 
 const fieldsFn = async (data, field, message) => {
+  // eslint-disable-next-line
   const { type_id, fields } = data;
   const type = await Type.findOrFail(type_id);
   const { rows: typeFields } = await type.fields().fetch();

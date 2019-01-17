@@ -27,9 +27,9 @@ Route.group(() => {
   Route.delete('/products/:pid', 'ProductController.delete');
 
   Route.get('/types', 'TypeController.index');
-  Route.post('/types', 'TypeController.store');
+  Route.post('/types', 'TypeController.store').validator('CheckType');
   Route.get('/types/:tid', 'TypeController.show');
-  Route.put('/types/:tid', 'TypeController.update');
+  Route.put('/types/:tid', 'TypeController.update').validator('CheckType');
   Route.delete('/types/:tid', 'TypeController.delete');
 
   Route.get('/types/:tid/fields', 'FieldController.index');

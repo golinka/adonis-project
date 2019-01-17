@@ -1,4 +1,5 @@
 const Product = use('App/Models/Product');
+const User = use('App/Models/User');
 
 class ProductController {
   async index({ request }) {
@@ -6,10 +7,14 @@ class ProductController {
   }
 
   async store({ request, response }) {
+    const { rows: users } = await User.all();
+    const random = Math.floor(Math.random() * users.length);
+    const user = users[random];
+
     const data = request.only(['title', 'description', 'price', 'type_id']);
     const { fields } = request.post();
     response.status(201);
-    return Product.saveProduct(data, fields);
+    return Product.saveProduct(user.id, data, fields);
   }
 
   async show({ params }) {

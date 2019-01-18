@@ -1,20 +1,16 @@
 const Product = use('App/Models/Product');
-const User = use('App/Models/User');
 
 class ProductController {
   async index({ request }) {
     return Product.getProducts(request.only(['user_id', 'type_id', 'title']), request.only(['price', 'created_at']));
   }
 
-  async store({ request, response }) {
-    const { rows: users } = await User.all();
-    const random = Math.floor(Math.random() * users.length);
-    const user = users[random];
-
+  async store({ request, response, auth }) {
+    const { id: userId } = await auth.getUser();
     const data = request.only(['title', 'description', 'price', 'type_id']);
     const { fields } = request.post();
     response.status(201);
-    return Product.saveProduct(user.id, data, fields);
+    return Product.saveProduct(userId, data, fields);
   }
 
   async show({ params }) {

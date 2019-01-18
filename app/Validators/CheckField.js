@@ -1,4 +1,4 @@
-class StoreField {
+class CheckField {
   get rules() {
     return {
       name: 'required|unique:fields|max:30'
@@ -6,4 +6,4 @@ class StoreField {
   }
 }
 
-module.exports = StoreField;
+module.exports = CheckField;

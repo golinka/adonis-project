@@ -11,13 +11,11 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory');
-const Role = use('App/Models/Role');
 
 Factory.blueprint('App/Models/User', async (faker, index, data) => ({
-  first_name: data.first_name || faker.first(),
-  last_name: data.first_name || faker.last(),
   password: data.password || faker.password(),
-  role_id: data.role_id || (await Role.findBy('name', 'user').id)
+  username: data.username || faker.username(),
+  email: data.email || faker.email({ domain: 'mindk.com' })
 }));
 
 Factory.blueprint('App/Models/Type', async (faker, index, data) => ({

@@ -21,20 +21,20 @@ Route.group(() => {
   Route.get('/logout', 'UserController.logout');
 
   Route.get('/products', 'ProductController.index');
-  Route.post('/products', 'ProductController.store');
+  Route.post('/products', 'ProductController.store').validator('CheckProduct');
   Route.get('/products/:pid', 'ProductController.show');
-  Route.put('/products/:pid', 'ProductController.update');
+  Route.put('/products/:pid', 'ProductController.update').validator('CheckProduct');
   Route.delete('/products/:pid', 'ProductController.delete');
 
   Route.get('/types', 'TypeController.index');
-  Route.post('/types', 'TypeController.store');
+  Route.post('/types', 'TypeController.store').validator('CheckType');
   Route.get('/types/:tid', 'TypeController.show');
-  Route.put('/types/:tid', 'TypeController.update');
+  Route.put('/types/:tid', 'TypeController.update').validator('CheckType');
   Route.delete('/types/:tid', 'TypeController.delete');
 
   Route.get('/types/:tid/fields', 'FieldController.index');
-  Route.post('/types/:tid/fields', 'FieldController.store');
+  Route.post('/types/:tid/fields', 'FieldController.store').validator('CheckField');
   Route.get('/types/:tid/fields/:fid', 'FieldController.show');
-  Route.put('/types/:tid/fields/:fid', 'FieldController.update');
+  Route.put('/types/:tid/fields/:fid', 'FieldController.update').validator('CheckField');
   Route.delete('/types/:tid/fields/:fid', 'FieldController.delete');
 }).prefix('api/v1');

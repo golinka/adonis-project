@@ -13,13 +13,13 @@ class FieldController {
   }
 
   async show({ params }) {
-    const { fid } = params;
-    return Field.findOrFail(fid);
+    const { tid, fid } = params;
+    return Field.showField(tid, fid);
   }
 
   async update({ params, request }) {
-    const { fid } = params;
-    return Field.updateField(fid, request.only(['name', 'type_id']));
+    const { tid, fid } = params;
+    return Field.updateField(tid, fid, request.only(['name', 'type_id']));
   }
 
   async delete({ params, response }) {

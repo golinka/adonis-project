@@ -23,12 +23,14 @@ Route.group(() => {
   Route.get('/products', 'ProductController.index');
   Route.get('/products/:pid', 'ProductController.show');
 }).prefix('api/v1');
-  
+
 Route.group(() => {
   Route.post('/products', 'ProductController.store').validator('CheckProduct');
   Route.put('/products/:pid', 'ProductController.update').validator('CheckProduct');
   Route.delete('/products/:pid', 'ProductController.delete');
-}).middleware('auth').prefix('api/v1');
+})
+  .middleware('auth')
+  .prefix('api/v1');
 
 Route.group(() => {
   Route.get('/types', 'TypeController.index');
@@ -42,4 +44,6 @@ Route.group(() => {
   Route.get('/types/:tid/fields/:fid', 'FieldController.show');
   Route.put('/types/:tid/fields/:fid', 'FieldController.update').validator('CheckField');
   Route.delete('/types/:tid/fields/:fid', 'FieldController.delete');
-}).middleware(['auth', 'is:admin']).prefix('api/v1');
+})
+  .middleware(['auth', 'is:admin'])
+  .prefix('api/v1');

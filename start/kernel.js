@@ -10,10 +10,7 @@ const Server = use('Server');
 | match.
 |
 */
-const globalMiddleware = [
-  'Adonis/Middleware/BodyParser',
-  'Adonis/Middleware/AuthInit'
-];
+const globalMiddleware = ['Adonis/Middleware/BodyParser', 'Adonis/Middleware/AuthInit'];
 
 /*
 |--------------------------------------------------------------------------

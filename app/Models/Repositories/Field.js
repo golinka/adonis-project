@@ -1,5 +1,4 @@
 const Type = use('App/Models/Type');
-const Field = use('App/Models/Field');
 
 class FieldRepository {
   static async getFields(tid) {
@@ -7,13 +6,25 @@ class FieldRepository {
     return type.fields().fetch();
   }
 
+  static async showField(tid, fid) {
+    const type = await Type.findOrFail(tid);
+    return type
+      .fields()
+      .where('id', fid)
+      .firstOrFail();
+  }
+
   static async saveField(tid, data) {
     const type = await Type.findOrFail(tid);
     return type.fields().create(data);
   }
 
-  static async updateField(fid, data) {
-    const field = await Field.findOrFail(fid);
+  static async updateField(tid, fid, data) {
+    const type = await Type.findOrFail(tid);
+    const field = await type
+      .fields()
+      .where('id', fid)
+      .firstOrFail();
     field.merge(data);
     await field.save();
     return field;

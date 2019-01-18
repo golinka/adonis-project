@@ -17,15 +17,20 @@ const Route = use('Route');
 Route.get('/', () => ({ status: 'Ok', version: '1.0.0' }));
 
 Route.group(() => {
-  Route.post('/login', 'UserController.login');
-  Route.get('/logout', 'UserController.logout');
+  Route.post('/login', 'AuthController.login').middleware('guest');
+  Route.get('/logout', 'AuthController.logout');
 
   Route.get('/products', 'ProductController.index');
-  Route.post('/products', 'ProductController.store').validator('CheckProduct');
   Route.get('/products/:pid', 'ProductController.show');
+}).prefix('api/v1');
+  
+Route.group(() => {
+  Route.post('/products', 'ProductController.store').validator('CheckProduct');
   Route.put('/products/:pid', 'ProductController.update').validator('CheckProduct');
   Route.delete('/products/:pid', 'ProductController.delete');
+}).middleware('auth').prefix('api/v1');
 
+Route.group(() => {
   Route.get('/types', 'TypeController.index');
   Route.post('/types', 'TypeController.store').validator('CheckType');
   Route.get('/types/:tid', 'TypeController.show');
@@ -37,4 +42,4 @@ Route.group(() => {
   Route.get('/types/:tid/fields/:fid', 'FieldController.show');
   Route.put('/types/:tid/fields/:fid', 'FieldController.update').validator('CheckField');
   Route.delete('/types/:tid/fields/:fid', 'FieldController.delete');
-}).prefix('api/v1');
+}).middleware(['auth', 'is:admin']).prefix('api/v1');

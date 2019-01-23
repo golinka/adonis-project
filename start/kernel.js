@@ -32,7 +32,8 @@ const globalMiddleware = ['Adonis/Middleware/BodyParser', 'Adonis/Middleware/Aut
 const namedMiddleware = {
   auth: 'Adonis/Middleware/Auth',
   guest: 'Adonis/Middleware/AllowGuestOnly',
-  is: 'Adonis/Acl/Is'
+  is: 'Adonis/Acl/Is',
+  editProduct: 'App/Middleware/EditProduct'
 };
 
 /*

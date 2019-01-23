@@ -26,8 +26,10 @@ Route.group(() => {
 
 Route.group(() => {
   Route.post('/products', 'ProductController.store').validator('CheckProduct');
-  Route.put('/products/:pid', 'ProductController.update').validator('CheckProduct');
-  Route.delete('/products/:pid', 'ProductController.delete');
+  Route.put('/products/:pid', 'ProductController.update')
+    .validator('CheckProduct')
+    .middleware('editProduct');
+  Route.delete('/products/:pid', 'ProductController.delete').middleware('editProduct');
 })
   .middleware('auth')
   .prefix('api/v1');

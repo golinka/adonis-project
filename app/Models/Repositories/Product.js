@@ -47,8 +47,7 @@ class ProductRepository {
     const product = await Product.findOrFail(pid);
 
     if (product.type_id !== data.type_id) {
-      await product.fields().detach();
-      await product.fields().attach(Object.keys(fields), row => {
+      await product.fields().sync(Object.keys(fields), row => {
         row.value = fields[row.field_id];
       });
     } else {
